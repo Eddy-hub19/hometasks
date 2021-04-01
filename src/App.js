@@ -1,41 +1,81 @@
-// 1. відмалювати список карточок базуючись на якомусь створеному вами масиві створити окрему кнопку,
-// яка буде видаляти поточний перший елемент (або останній)
-// якщо у нас масив з 3 елементів і ми клікнули на кнопку 3 рази,
-// то на екрані жодна карточка не має відмалюватись
-// (кнопки повернення до початкового стану не треба)
-
-import "./logo.svg";
 import React, { useState } from "react";
-import {
-  BtnRemoveCard,
-  Button,
-} from "./components/Card/buttons/Buttons/Button";
-import { CardItem } from "./components/Card/Card";
 
 function App() {
-  const RemoveCard = () => {
-    console.log("click");
+  const [arr, changeArr] = useState([
+    {
+      id: 1,
+      title: "title1",
+    },
+    {
+      id: 2,
+      title: "title2",
+    },
+    {
+      id: 3,
+      title: "title3",
+    },
+  ]);
+  // Для того,щоб не повторювати та скоротити код ми робим те,що показано в низу!
+
+  // const removeFirst = () => {
+  //   const newArr = [...arr];
+  //   newArr.shift();
+
+  //   changeArr(newArr);
+  // };
+
+  // const removeLast = () => {
+  //   const newArr = [...arr];
+  //   newArr.pop();
+
+  //   changeArr(newArr);
+  // };
+
+  const [itemsToHide, setItemsToHide] = useState([]);
+
+  const filteredArr = arr.filter((el) => !itemsToHide.includes(el.id));
+
+  //itemToRemove is 'last' or 'first'
+  const handleArrChange = () => {
+    const itemToRemove = filteredArr[0];
+
+    if (!itemToRemove) return;
+
+    const clone = [...itemsToHide];
+    clone.push(itemToRemove.id);
+    setItemsToHide(clone);
   };
 
-  const BtnRemoveCard = () => {
-    return (
-      <div className="btn">
-        <button onClick={RemoveCard}>Remove</button>
-      </div>
-    );
+  const onRevert = () => {
+    setItemsToHide([]);
   };
+
+  const [isOk, setIsOk] = useState(false);
 
   return (
-    <div className="App">
-      <Button key="1" />
-      <CardItem text="ITEM" name="Black tea" cost="$10" />
-      <Button key="2" />
-      <CardItem text="ITEM" name="White Tea" cost="$25" />
-      <Button key="3" />
-      <CardItem text="ITEM" name="Red Tea" cost="$21" />
-      <Button key="4" />
-      <CardItem text="ITEM" name="Green Tea" cost="$15" />
-      <BtnRemoveCard key="5" />
+    <div className={`App ${isOk ? "red" : ""}`.trim()}>
+      <h2
+        onClick={() => {
+          setIsOk(!isOk);
+        }}
+      >
+        {isOk ? "Ed" : "Sekan"}
+      </h2>
+      <button onClick={onRevert}> revert </button>
+      <ul>
+        {filteredArr.map((el) => (
+          <li key={el.id}>
+            {el.title} -
+            <button
+              onClick={() => {
+                handleArrChange(el);
+              }}
+            >
+              remove
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
