@@ -1,81 +1,34 @@
 import React, { useState } from "react";
+// 1 відмалювати список карточок базуючись на якомусь створеному вами масиві
+// створити окрему кнопку, яка буде видаляти поточний перший елемент (або останній)
+// якщо у нас масив з 3 елементів і ми клікнули на кнопку 3 рази, то на екрані жодна карточка не має відмалюватись
+// (кнопки повернення до початкового стану не треба
 
 function App() {
-  const [arr, changeArr] = useState([
-    {
-      id: 1,
-      title: "title1",
-    },
-    {
-      id: 2,
-      title: "title2",
-    },
-    {
-      id: 3,
-      title: "title3",
-    },
-  ]);
-  // Для того,щоб не повторювати та скоротити код ми робим те,що показано в низу!
+  let [counter, setCounter] = useState(0);
+  let [user, setUser] = useState({ name: "vasya", age: 23 });
 
-  // const removeFirst = () => {
-  //   const newArr = [...arr];
-  //   newArr.shift();
-
-  //   changeArr(newArr);
-  // };
-
-  // const removeLast = () => {
-  //   const newArr = [...arr];
-  //   newArr.pop();
-
-  //   changeArr(newArr);
-  // };
-
-  const [itemsToHide, setItemsToHide] = useState([]);
-
-  const filteredArr = arr.filter((el) => !itemsToHide.includes(el.id));
-
-  //itemToRemove is 'last' or 'first'
-  const handleArrChange = () => {
-    const itemToRemove = filteredArr[0];
-
-    if (!itemToRemove) return;
-
-    const clone = [...itemsToHide];
-    clone.push(itemToRemove.id);
-    setItemsToHide(clone);
+  const incCounter = () => {
+    counter++;
+    console.log(counter);
+    setCounter(counter);
   };
 
-  const onRevert = () => {
-    setItemsToHide([]);
+  const incAge = () => {
+    user.age++;
+    console.log(user);
+    setUser({ ...user });
   };
-
-  const [isOk, setIsOk] = useState(false);
 
   return (
-    <div className={`App ${isOk ? "red" : ""}`.trim()}>
-      <h2
-        onClick={() => {
-          setIsOk(!isOk);
-        }}
-      >
-        {isOk ? "Ed" : "Sekan"}
-      </h2>
-      <button onClick={onRevert}> revert </button>
-      <ul>
-        {filteredArr.map((el) => (
-          <li key={el.id}>
-            {el.title} -
-            <button
-              onClick={() => {
-                handleArrChange(el);
-              }}
-            >
-              remove
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <div>
+        {counter} - <button onClick={incCounter}>increment counter</button>
+      </div>
+      <div>
+        {user.name} - {user.age}
+        <button onClick={incAge}> inc age </button>
+      </div>
     </div>
   );
 }
