@@ -53,7 +53,7 @@
 //   const [isOk, setIsOk] = useState(false);
 
 //   return (
-//     <div className={`App ${isOk ? "red" : ""}`.trim()}>
+//     <div className={`App ${isOk ? "red" : "ed"}`.trim()}>
 //       <h2
 //         onClick={() => {
 //           setIsOk(!isOk);
@@ -63,7 +63,9 @@
 //       </h2>
 //       <button onClick={onRevert}> revert </button>
 //       <ul>
-//         {filteredArr.map((el) => (<li key={el.id}>{el.title} -
+//         {filteredArr.map((el) => (
+//           <li key={el.id}>
+//             {el.title} -
 //             <button
 //               onClick={() => {
 //                 handleArrChange(el);

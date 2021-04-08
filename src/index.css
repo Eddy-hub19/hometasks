@@ -1,5 +1,8 @@
 * {
   text-align: center;
+  list-style: none;
+  color: rgb(19, 91, 107);
+  font-weight: 700;
 }
 body {
   margin: 0;
@@ -16,5 +19,5 @@ code {
 }
 
 .red {
-  background: red;
+ background: rgb(165, 133, 133);
 }
